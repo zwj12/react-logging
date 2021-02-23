@@ -1,63 +1,67 @@
+import React, { Component } from 'react';
 import LogMessage from './LogMessage';
 
-class LogData {
-	constructor(robName) {
-		this.robName = robName;
-		this.logMessageArray = [];
+class LogData extends React.Component {
+	constructor(props) {
+		super(props);
 	}
 
 	toString() {
 		let strLogData = "";
-		for (let i = 0; i < this.logMessageArray.length; i++) {
-			strLogData += this.logMessageArray[i].toString(); 
+		for (let i = 0; i < this.props.messages.length; i++) {
+			strLogData += this.props.messages[i].toString()
 		}
 		return strLogData;
 	}
 
-	parse(strData) {
+	static parse(strData) {
 		let patt = new RegExp("^.*(\r)?\n", "gm");
 		let result = strData.match(patt);
-		this.logMessageArray = [];
+		let messages = [];
 		for (let i = 0; i < result.length; i++) {
-			let logMessage = new LogMessage(this.robName);
-			logMessage.parse(result[i].trim());
-			this.logMessageArray[i] = logMessage;
+			messages[i] = LogMessage.parse(result[i].trim());
 		}
+		return messages;
 	}
 
-	parseFromFile() {
-		let logData = this;
+	static parseFileName(fileName) {
+		let file = {}
+		let numStartIndex = 0;
+		let numStopIndex = 0;
 
-		function transferComplete() {
-			logData.parse(this.responseText);
-			for (let i = 0; i < logData.logMessageArray.length; i++) {
-				console.log(logData.logMessageArray[i].toString());
-			}
-		}
+		file.year = fileName.substring(0, 4);
+		file.month = fileName.substring(5, 7) - 1;
+		file.date = fileName.substring(8, 10);
 
-		//let url = "/fileservice/$home/Logging/" + strYear + "-" + strMonth + "-" + strDate + "_" + robName + ".log"
-		let url = "/fileservice/$home/Logging/2020-01-04_T_ROB1.log"
-		let request = new XMLHttpRequest();
-		request.onload = transferComplete;
-		request.open("GET", url);
-		request.send();
+		numStartIndex = 11;
+		numStopIndex = fileName.indexOf(".", numStartIndex);
+		file.robName = fileName.substring(numStartIndex, numStopIndex);
+
+		return file;
 	}
 
-	static getFileList() {
-		function transferComplete() {
-			let obj = JSON.parse(this.responseText);
-			let fileList = obj._embedded._state;
-			for (let i = 0; i < fileList.length; i++) {
-				console.log(fileList[i]["_title"]);
-			}
-		}
+	render() {
+		const messages = this.props.messages.map((message, index) => {
+			return (
+				<li key={index}>
+					<LogMessage
+						robName={this.props.robName}
+						createTime={message.createTime}
+						level={message.level}
+						loggingName={message.loggingName}
+						message={message.message}
+					/>
+				</li>
+			);
+		});
 
-		let url = "/fileservice/$home/Logging?json=1"
-		let request = new XMLHttpRequest();
-		request.onload = transferComplete;
-		request.open("GET", url);
-		request.send();
+		return (
+			<div className="LogData">
+				<ol>{messages}</ol>
+			</div>
+		);
 	}
+
 }
 
 export default LogData;

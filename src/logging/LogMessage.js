@@ -1,26 +1,42 @@
 // JavaScript source code
+import React, { Component } from 'react';
 
-class LogMessage {
-	constructor(robName) {
-		this.robName = robName;
-		this.createTime = null;
-		this.level = null;
-		this.loggingName = null;
-		this.message = null;
+class LogMessage extends React.Component {
+	constructor(props) {
+		super(props);
 	}
 
 	toString() {
-		let strMessage = this.robName
-			+ ":" + this.createTime.toISOString().substring(0, 19).replace("T", " ")
-			+ ":" + this.getLevelName()
-			+ ":" + this.loggingName
-			+ ":" + this.message;
+		let strMessage = this.props.robName
+			+ ":" + LogMessage.dateFormat("YYYY-mm-dd HH:MM:SS", this.props.createTime)
+			+ ":" + LogMessage.getLevelName(this.props.level)
+			+ ":" + this.props.loggingName
+			+ ":" + this.props.message;
 		return strMessage;
 	}
 
-	getLevelName() {
-		let strLevel = null;
-		switch (this.level) {
+	static dateFormat(fmt, date) {
+		let ret;
+		const opt = {
+			"Y+": date.getFullYear().toString(),
+			"m+": (date.getMonth() + 1).toString(),
+			"d+": date.getDate().toString(),
+			"H+": date.getHours().toString(),
+			"M+": date.getMinutes().toString(),
+			"S+": date.getSeconds().toString()
+		};
+		for (let k in opt) {
+			ret = new RegExp("(" + k + ")").exec(fmt);
+			if (ret) {
+				fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+			};
+		};
+		return fmt;
+	}
+
+	static getLevelName(level) {
+		let strLevel;
+		switch (level) {
 			case 10:
 				strLevel = "DEBUG";
 				break;
@@ -39,38 +55,49 @@ class LogMessage {
 		return strLevel;
 	}
 
-	parse(strLogMessage) {
+	static parse(strLogMessage) {
+		let message = {};
 		let numStartIndex = 0;
 		let numStopIndex = 0;
 
-		this.createTime = new Date(strLogMessage.substring(0, 19));
+		message.createTime = new Date(strLogMessage.substring(0, 19));
 
 		numStartIndex = 20;
 		numStopIndex = strLogMessage.indexOf(":", numStartIndex);
 		let strLevelName = strLogMessage.substring(numStartIndex, numStopIndex);
 		switch (strLevelName) {
 			case "DEBUG":
-				this.level = 10;
+				message.level = 10;
 				break;
 			case "INFO":
-				this.level = 20;
+				message.level = 20;
 				break;
 			case "ERRORING":
-				this.level = 40;
+				message.level = 40;
 				break;
 			case "CRITICAL":
-				this.level = 50;
+				message.level = 50;
 				break;
 			default:
-				this.level = 30;
+				message.level = 30;
 		}
 
 		numStartIndex = numStopIndex + 1;
 		numStopIndex = strLogMessage.indexOf(":", numStartIndex);
-		this.loggingName = strLogMessage.substring(numStartIndex, numStopIndex);
+		message.loggingName = strLogMessage.substring(numStartIndex, numStopIndex);
 
 		numStartIndex = numStopIndex + 1;
-		this.message = strLogMessage.substring(numStartIndex);
+		message.message = strLogMessage.substring(numStartIndex);
+
+		return message;
+	}
+
+	render() {
+		return (
+			<div className="LogMessage">
+				{this.toString()}
+			</div>
+		);
 	}
 
 }
