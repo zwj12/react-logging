@@ -1,0 +1,13 @@
+﻿body
+{
+}
+
+.left {
+    float: left;
+    width: 400px;
+    height: 100%;
+}
+
+.right {
+    margin-left: 500px;
+}

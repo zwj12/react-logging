@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Logging from './logging/Logging';
+import Dashboard from './Dashboard';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Logging />
+        <Dashboard />
     </React.StrictMode>,
     document.getElementById('root')
 );

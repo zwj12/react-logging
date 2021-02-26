@@ -1,5 +1,7 @@
 // JavaScript source code
 import React, { Component } from 'react';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 
 class LogMessage extends React.Component {
 	constructor(props) {
@@ -94,9 +96,15 @@ class LogMessage extends React.Component {
 
 	render() {
 		return (
-			<div className="LogMessage">
-				{this.toString()}
-			</div>
+			<React.Fragment>
+				<TableRow key={this.props.id}>
+					<TableCell>{this.props.robName}</TableCell>
+					<TableCell>{LogMessage.dateFormat("YYYY-mm-dd HH:MM:SS", this.props.createTime)}</TableCell>
+					<TableCell>{LogMessage.getLevelName(this.props.level)}</TableCell>
+					<TableCell>{this.props.loggingName}</TableCell>
+					<TableCell>{this.props.message}</TableCell>
+				</TableRow>
+			</React.Fragment>
 		);
 	}
 

@@ -2,38 +2,25 @@
 // xcopy /Y /S build "C:\Users\CNMIZHU7\Documents\RobotStudio\Virtual Controllers\Controller_Aprol\HOME\docs"
 
 import React, { Component } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+
 import LogData from './LogData';
 import LogMessage from './LogMessage';
+import FileList from './FileList';
+import './Logging.css';
 
 class Logging extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fileNameList: [],
             robName: "T_ROB1",
             year: 2020,
             month: 0,
             date: 4,
             messages: [],
         };
-    }
-
-    componentDidMount() {
-        this.getFileListFromRWS();
-    }
-
-    getFileListFromRWS() {
-        let url = "/fileservice/$home/Logging?json=1"
-        let request = new XMLHttpRequest();
-        request.onload = () => {
-            let obj = JSON.parse(request.responseText);
-            let fileNameList = obj._embedded._state.map(file => file._title);
-            this.setState({
-                fileNameList: fileNameList
-            });
-        };
-        request.open("GET", url);
-        request.send();
     }
 
     parseFromRWS(robName, year, month, date) {
@@ -60,26 +47,22 @@ class Logging extends React.Component {
     }
 
     render() {
-        const fileNameList = this.state.fileNameList.map((fileName) => {
-            return (
-                <li key={fileName}>                    
-                    <button onClick={() => this.handleClick(fileName)}>
-                        {fileName}
-                    </button>
-                </li>
-            );
-        });
-
         return (
             <div className="Logging">
-                <ol>{fileNameList}</ol>
-                <LogData
-                    robName={this.state.robName}
-                    year={this.state.year}
-                    month={this.state.month}
-                    date={this.state.date}
-                    messages={this.state.messages}
-                />
+                <div className="left">
+                    <List>
+                        <FileList handleClick={(fileName) => this.handleClick(fileName)}/>
+                    </List>
+                </div>
+                <div className="right">
+                    <LogData
+                        robName={this.state.robName}
+                        year={this.state.year}
+                        month={this.state.month}
+                        date={this.state.date}
+                        messages={this.state.messages}
+                    />
+                </div>
             </div>
         );
     }

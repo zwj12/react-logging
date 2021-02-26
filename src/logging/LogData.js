@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
 import LogMessage from './LogMessage';
 
 class LogData extends React.Component {
@@ -43,21 +50,36 @@ class LogData extends React.Component {
 	render() {
 		const messages = this.props.messages.map((message, index) => {
 			return (
-				<li key={index}>
-					<LogMessage
-						robName={this.props.robName}
-						createTime={message.createTime}
-						level={message.level}
-						loggingName={message.loggingName}
-						message={message.message}
-					/>
-				</li>
+				<LogMessage
+					id={index}
+					robName={this.props.robName}
+					createTime={message.createTime}
+					level={message.level}
+					loggingName={message.loggingName}
+					message={message.message}
+				/>
 			);
 		});
 
 		return (
 			<div className="LogData">
-				<ol>{messages}</ol>
+				<Typography component="h2" variant="h6" color="primary" gutterBottom>
+					Log Data
+				</Typography>
+				<Table size="small">
+					<TableHead>
+						<TableRow>
+							<TableCell>Task</TableCell>
+							<TableCell>Create Time</TableCell>
+							<TableCell>Level</TableCell>
+							<TableCell>Category</TableCell>
+							<TableCell>Message</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{messages}
+					</TableBody>
+				</Table>
 			</div>
 		);
 	}
