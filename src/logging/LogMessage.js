@@ -98,7 +98,6 @@ class LogMessage extends React.Component {
 		return (
 			<React.Fragment>
 				<TableRow key={this.props.id}>
-					<TableCell>{this.props.robName}</TableCell>
 					<TableCell>{LogMessage.dateFormat("YYYY-mm-dd HH:MM:SS", this.props.createTime)}</TableCell>
 					<TableCell>{LogMessage.getLevelName(this.props.level)}</TableCell>
 					<TableCell>{this.props.loggingName}</TableCell>

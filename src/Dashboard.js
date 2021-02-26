@@ -24,7 +24,7 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 
-import Logging from './logging/Logging';
+import LogData from './logging/LogData';
 import FileList from './logging/FileList';
 
 function Copyright() {
@@ -32,7 +32,7 @@ function Copyright() {
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+                ABB Auto Tier1
       </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -148,8 +148,8 @@ function Dashboard(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
-          </Typography>
+                        ABB Auto Tier1
+                    </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
                             <NotificationsIcon />
@@ -172,7 +172,9 @@ function Dashboard(props) {
                 <Divider />
                 <List>{mainListItems}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>
+                    <FileList handleClick={(fileName) => props.handleClick(fileName)} />
+                </List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
@@ -180,7 +182,13 @@ function Dashboard(props) {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <Logging />
+                                <LogData
+                                    robName={props.robName}
+                                    year={props.year}
+                                    month={props.month}
+                                    date={props.date}
+                                    messages={props.messages}
+                                />
                             </Paper>
                         </Grid>
                         {/* Chart */}
@@ -193,12 +201,6 @@ function Dashboard(props) {
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={fixedHeightPaper}>
                                 <Deposits />
-                            </Paper>
-                        </Grid>
-                        {/* Recent Orders */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <Orders />
                             </Paper>
                         </Grid>
                     </Grid>

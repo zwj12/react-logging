@@ -64,12 +64,11 @@ class LogData extends React.Component {
 		return (
 			<div className="LogData">
 				<Typography component="h2" variant="h6" color="primary" gutterBottom>
-					Log Data
+					Log Data - {this.props.robName}
 				</Typography>
 				<Table size="small">
 					<TableHead>
 						<TableRow>
-							<TableCell>Task</TableCell>
 							<TableCell>Create Time</TableCell>
 							<TableCell>Level</TableCell>
 							<TableCell>Category</TableCell>

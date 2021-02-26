@@ -37,10 +37,15 @@ class FileList extends React.Component {
         const fileNameList = this.state.fileNameList.map((fileName) => {
             return (
                 <ListItem button onClick={() => this.props.handleClick(fileName)}>
+                    {
+                    /*
                     <ListItemIcon>
                         <Description />
                     </ListItemIcon>
-                    <ListItemText primary={fileName} />
+                    */
+                    }
+
+                    <ListItemText primary={fileName.substring(0, fileName.length-4)} />
                 </ListItem>
             );
         });

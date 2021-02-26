@@ -14,7 +14,8 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "recharts": "latest",
-    "fontsource-roboto": "latest"
+    "fontsource-roboto": "latest",
+    "react-redux": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

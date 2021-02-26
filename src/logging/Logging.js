@@ -1,5 +1,6 @@
 // JavaScript source code
 // xcopy /Y /S build "C:\Users\CNMIZHU7\Documents\RobotStudio\Virtual Controllers\Controller_Aprol\HOME\docs"
+// xcopy /Y /S build "C:\Users\CNMIZHU7\Documents\RobotStudio\Virtual Controllers\6700-525386-2020-12-11\HOME\docs"
 
 import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +10,7 @@ import List from '@material-ui/core/List';
 import LogData from './LogData';
 import LogMessage from './LogMessage';
 import FileList from './FileList';
+import Dashboard from '../Dashboard';
 import './Logging.css';
 
 class Logging extends React.Component {
@@ -49,20 +51,14 @@ class Logging extends React.Component {
     render() {
         return (
             <div className="Logging">
-                <div className="left">
-                    <List>
-                        <FileList handleClick={(fileName) => this.handleClick(fileName)}/>
-                    </List>
-                </div>
-                <div className="right">
-                    <LogData
-                        robName={this.state.robName}
-                        year={this.state.year}
-                        month={this.state.month}
-                        date={this.state.date}
-                        messages={this.state.messages}
-                    />
-                </div>
+                <Dashboard
+                    robName={this.state.robName}
+                    year={this.state.year}
+                    month={this.state.month}
+                    date={this.state.date}
+                    messages={this.state.messages}
+                    handleClick={(fileName) => this.handleClick(fileName)}
+                />
             </div>
         );
     }

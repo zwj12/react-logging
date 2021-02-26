@@ -8,7 +8,7 @@ import Dashboard from './Dashboard';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Dashboard />
+        <Logging />
     </React.StrictMode>,
     document.getElementById('root')
 );
