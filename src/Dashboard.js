@@ -24,8 +24,10 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 
-import LogData from './logging/LogData';
-import FileList from './logging/FileList';
+//import LogData from './logging/LogData';
+//import FileList from './logging/FileList';
+import LogData from './components/LogData';
+import FileList from './components/LogFileList';
 
 function Copyright() {
     return (

@@ -6,9 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import Logging from './logging/Logging';
 import Dashboard from './Dashboard';
 
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 ReactDOM.render(
     <React.StrictMode>
-        <Logging />
+        <Provider store={store}>
+            <Logging />
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );
