@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Logging from './logging/Logging';
 import Dashboard from './Dashboard';
 
 import { Provider } from "react-redux";
@@ -12,7 +11,7 @@ import store from "./redux/store";
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <Logging />
+            <Dashboard />
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

@@ -1,1 +1,2 @@
-export const LOGDATA = "LOGDATA";
+export const GET_LOGDATA = "GET_LOGDATA";
+export const GET_LOGFILELIST = "GET_LOGFILELIST";

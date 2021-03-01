@@ -1,16 +1,24 @@
-import { LOGDATA } from "../actionTypes";
+import { GET_LOGDATA } from "../actionTypes";
 
 const initialState = {
-    messages: []
+    robName: "",
+    year: null,
+    month: null,
+    date: null,
+    logMessages: []
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case LOGDATA: {
-            const { messages } = action.payload;
+        case GET_LOGDATA: {
+            const { robName, year, month, date, logMessages } = action.payload;
             return {
                 ...state,
-                messages: messages,
+                robName: robName,
+                year: year,
+                month: month,
+                date: date,
+                logMessages: logMessages,
             };
         }
         default:

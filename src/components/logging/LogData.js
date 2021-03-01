@@ -6,14 +6,26 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { connect } from "react-redux";
-import LogMessage from '../logging/LogMessage';
+
+import LogMessage from './LogMessage';
 
 class LogData extends React.Component {
+
+	static parse(strData) {
+		let patt = new RegExp("^.*(\r)?\n", "gm");
+		let result = strData.match(patt);
+		let messages = [];
+		for (let i = 0; i < result.length; i++) {
+			messages[i] = LogMessage.parse(result[i].trim());
+		}
+		return messages;
+	}
+
 	render() {
 		return (
-			<div className="LogData">
+			<div>
 				<Typography component="h2" variant="h6" color="primary" gutterBottom>
-					Log Data - TaskMichael
+					{"Log Data - " + this.props.robName }
 				</Typography>
 				<Table size="small">
 					<TableHead>
@@ -26,15 +38,15 @@ class LogData extends React.Component {
 					</TableHead>
 					<TableBody>
 						{
-							this.props.messages.map((message, index) => {
+							this.props.logMessages.map((logMessage, index) => {
 								return (
 									<LogMessage
 										id={index}
-										robName="TaskMichael"
-										createTime={message.createTime}
-										level={message.level}
-										loggingName={message.loggingName}
-										message={message.message}
+										robName={this.props.robName}
+										createTime={logMessage.createTime}
+										level={logMessage.level}
+										loggingName={logMessage.loggingName}
+										message={logMessage.message}
 									/>
 								);
 							})

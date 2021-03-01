@@ -2,8 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\logging"
+    "\\src\\components",
+    "\\src\\components\\logging",
+    "\\src\\logging",
+    "\\src\\redux",
+    "\\src\\redux\\reducers"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\src\\redux\\actions.js",
   "PreviewInSolutionExplorer": false
 }
