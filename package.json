@@ -13,11 +13,11 @@
     "web-vitals": "^1.1.0",
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
+    "@material-ui/data-grid": "latest",
     "recharts": "latest",
     "fontsource-roboto": "latest",
     "@reduxjs/toolkit": "latest",
-    "react-redux": "latest",
-    "redux-devtools": "latest"
+    "react-redux": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

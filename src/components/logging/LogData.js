@@ -1,3 +1,7 @@
+// JavaScript source code
+// xcopy /Y /S build "C:\Users\CNMIZHU7\Documents\RobotStudio\Virtual Controllers\Controller_Aprol\HOME\docs"
+// xcopy /Y /S build "C:\Users\CNMIZHU7\Documents\RobotStudio\Virtual Controllers\6700-525386-2020-12-11\HOME\docs"
+
 import React from "react";
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';

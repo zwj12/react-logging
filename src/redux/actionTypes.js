@@ -1,2 +1,4 @@
 export const GET_LOGDATA = "GET_LOGDATA";
 export const GET_LOGFILELIST = "GET_LOGFILELIST";
+export const SWITCH_PAGE = "SWITCH_PAGE";
+export const GET_SPOTWELDDATA = "GET_SPOTWELDDATA";

@@ -24,8 +24,13 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 
+import { connect } from "react-redux";
+
 import LogData from './components/logging/LogData';
 import FileList from './components/logging/LogFileList';
+import { ConnectedMainMenu as MainMenu } from './MainMenu';
+//import MainMenu from './MainMenu';
+import SpotWeldList from './components/ytci/SpotWeldData';
 
 function Copyright() {
     return (
@@ -121,6 +126,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function GetMainContent(props) {
+    let mainContent = <LogData />;
+    switch (props.page) {
+        case "Logging":
+            mainContent = <LogData />;
+            break;
+        case "YTCI":
+            mainContent = <SpotWeldList />
+            break;
+        default:
+            mainContent = <LogData />
+    } 
+    return mainContent;
+}
+
 function Dashboard(props) {
 
     const classes = useStyles();
@@ -132,6 +152,8 @@ function Dashboard(props) {
         setOpen(false);
     };
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+    
 
     return (
         <div className={classes.root}>
@@ -170,7 +192,7 @@ function Dashboard(props) {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List><MainMenu/></List>
                 <Divider />
                 <List>
                     <FileList handleClick={(fileName) => props.handleClick(fileName)} />
@@ -182,13 +204,7 @@ function Dashboard(props) {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <LogData
-                                    robName={props.robName}
-                                    year={props.year}
-                                    month={props.month}
-                                    date={props.date}
-                                    messages={props.messages}
-                                />
+                                {GetMainContent(props)}
                             </Paper>
                         </Grid>
                         {/* Chart */}
@@ -213,4 +229,11 @@ function Dashboard(props) {
     );
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+    return state.switchPage;
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(Dashboard);
