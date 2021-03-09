@@ -15,7 +15,7 @@ export const switchPage = (page) => ({
     payload: { page }
 });
 
-export const getSpotWeldData = (spotWeldArray) => ({
+export const getSpotWeldData = (spotWeld) => ({
     type: GET_SPOTWELDDATA,
-    payload: { spotWeldArray }
+    payload: { spotWeld }
 });

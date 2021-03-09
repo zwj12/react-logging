@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { switchPage } from "./redux/actions";
+import { switchPage, getSpotWeldData } from "./redux/actions";
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -11,9 +11,33 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 
+import SpotWeld from './components/ytci/SpotWeld';
+
 class MainMenu extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    parseFromRWS(numIndex) {
+        let url = "/rw/rapid/symbol/data/RAPID/T_ROB1/PartAModule/rProcessTargetList{" + numIndex + "}?json=1"
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let obj = JSON.parse(request.responseText);
+            let strTarget = obj._embedded._state[0];
+            let spotWeld = new SpotWeld();
+            spotWeld.parse(strTarget.value);
+            spotWeld.index = numIndex;
+            this.props.getSpotWeldData(spotWeld);
+        };
+        request.open("GET", url);
+        request.send();
+    }
+
+    loadSpotWeldData() {
+        for (let i = 1; i <= 13; i++) {
+            this.parseFromRWS(i);
+        }        
+        this.props.switchPage("YTCI")
     }
 
     render() {
@@ -29,7 +53,7 @@ class MainMenu extends React.Component {
                     <ListItemIcon>
                         <ShoppingCartIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Orders" onClick={() => this.props.switchPage("YTCI")} />
+                    <ListItemText primary="Orders" onClick={() => this.loadSpotWeldData()} />
                 </ListItem>
                 <ListItem button>
                     <ListItemIcon>
@@ -56,7 +80,7 @@ class MainMenu extends React.Component {
 
 const ConnectedMainMenu=connect(
     null
-    , { switchPage }
+    , { switchPage, getSpotWeldData }
 )(MainMenu);
 
 export { ConnectedMainMenu };

@@ -1,40 +1,29 @@
 // JavaScript source code
 import React, { Component } from 'react';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
+import { connect } from "react-redux";
+
 import SpotWeld from './SpotWeld';
 
 const columns = [
-	{ field: 'id', headerName: 'ID', width: 70 },
-	{ field: 'firstName', headerName: 'First name', width: 130 },
-	{ field: 'lastName', headerName: 'Last name', width: 130 },
-	{
-		field: 'age',
-		headerName: 'Age',
-		type: 'number',
-		width: 90,
-	},
-	{
-		field: 'fullName',
-		headerName: 'Full name',
-		description: 'This column has a value getter and is not sortable.',
-		sortable: false,
-		width: 160,
-		valueGetter: (params) =>
-			`${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
-	},
+	{ field: 'id', headerName: 'Index', width: 100 },
+	{ field: 'processType', headerName: 'Process', width: 130 },
+	{ field: 'x', headerName: 'x', type: 'number', width: 130 },
+	{ field: 'y', headerName: 'y', type: 'number', width: 130 },
+	{ field: 'z', headerName: 'z', type: 'number', width: 130 },
 ];
 
-const rows = [
-	{ id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-	{ id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-	{ id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-	{ id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-	{ id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-	{ id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-	{ id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-	{ id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-	{ id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+//const rows = [
+//	{ id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+//	{ id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+//	{ id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+//	{ id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+//	{ id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+//	{ id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+//	{ id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+//	{ id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+//	{ id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+//];
 
 function CustomToolbar() {
 	return (
@@ -44,21 +33,13 @@ function CustomToolbar() {
 	);
 }
 
-function parseFromRWS(numIndex) {
-	let url = "/rw/rapid/symbol/data/RAPID/T_ROB1/PartAModule/rProcessTargetList{" + numIndex + "}?json=1"
-	let request = new XMLHttpRequest();
-	request.onload = () => {
-		let obj = JSON.parse(request.responseText);
-		var strTarget = obj._embedded._state[0];
-		let spotWeld = new SpotWeld();
-		spotWeld.parse("1", strTarget.value);
-	};
-	request.open("GET", url);
-	request.send();
-}
+function DataGridDemo(props) {
+	let rows = props.spotWeldList.map((spotWeld, index) => {
+		return (
+			{ id: spotWeld.index, processType: spotWeld.getProcessTypeName(), x: spotWeld.x, y: spotWeld.y, z: spotWeld.z }
+		);
+	});
 
-export default function DataGridDemo() {
-	parseFromRWS(1);
 	return (
 		<div style={{ height: 500, width: '100%' }}>
 			<DataGrid
@@ -73,3 +54,11 @@ export default function DataGridDemo() {
 	);
 }
 
+const mapStateToProps = state => {
+	return state.spotWeldData;
+};
+
+export default connect(
+	mapStateToProps,
+	null
+)(DataGridDemo);
