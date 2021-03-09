@@ -32,6 +32,8 @@ import { ConnectedMainMenu as MainMenu } from './MainMenu';
 //import MainMenu from './MainMenu';
 import SpotWeldList from './components/ytci/SpotWeldData';
 
+import RechartsTest from './RechartsTest';
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -208,15 +210,14 @@ function Dashboard(props) {
                             </Paper>
                         </Grid>
                         {/* Chart */}
-                        <Grid item xs={12} md={8} lg={9}>
+                        <Grid item xs={12}>
                             <Paper className={fixedHeightPaper}>
                                 <Chart />
                             </Paper>
                         </Grid>
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <Deposits />
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                <RechartsTest />
                             </Paper>
                         </Grid>
                     </Grid>

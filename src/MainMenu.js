@@ -33,10 +33,22 @@ class MainMenu extends React.Component {
         request.send();
     }
 
+    parseSpotWeldQuantityFromRWS() {
+        let url = "/rw/rapid/symbol/data/RAPID/T_ROB1/PartAModule/numTotalQuantity?json=1"
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let obj = JSON.parse(request.responseText);
+            let numTotalQuantity = parseInt(obj._embedded._state[0].value);
+            for (let i = 1; i <= numTotalQuantity; i++) {
+                this.parseFromRWS(i);
+            }        
+        };
+        request.open("GET", url);
+        request.send();
+    }
+
     loadSpotWeldData() {
-        for (let i = 1; i <= 13; i++) {
-            this.parseFromRWS(i);
-        }        
+        this.parseSpotWeldQuantityFromRWS();
         this.props.switchPage("YTCI")
     }
 
@@ -47,19 +59,19 @@ class MainMenu extends React.Component {
                     <ListItemIcon>
                         <DashboardIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Dashboard" onClick={() => this.props.switchPage("Logging")} />
+                    <ListItemText primary="Logging" onClick={() => this.props.switchPage("Logging")} />
                 </ListItem>
                 <ListItem button>
                     <ListItemIcon>
                         <ShoppingCartIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Orders" onClick={() => this.loadSpotWeldData()} />
+                    <ListItemText primary="Spot Weld" onClick={() => this.loadSpotWeldData()} />
                 </ListItem>
                 <ListItem button>
                     <ListItemIcon>
                         <PeopleIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Customers" onClick={() => this.props.dispatch({ type: 'SWITCH_PAGE', payload: { page: 'YTCI' } })} />
+                    <ListItemText primary="Tasks" onClick={() => this.props.dispatch({ type: 'SWITCH_PAGE', payload: { page: 'YTCI' } })} />
                 </ListItem>
                 <ListItem button>
                     <ListItemIcon>
@@ -71,7 +83,7 @@ class MainMenu extends React.Component {
                     <ListItemIcon>
                         <LayersIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Integrations" />
+                    <ListItemText primary="Setting" />
                 </ListItem>
             </div>
         );
