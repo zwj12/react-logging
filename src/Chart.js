@@ -33,7 +33,7 @@ function Chart(props) {
     return (
         <React.Fragment>
             <Title>Spot Weld Points</Title>
-            <ResponsiveContainer>
+            <ResponsiveContainer height="100%" >
                 <LineChart
                     data={data}
                     margin={{
@@ -45,8 +45,8 @@ function Chart(props) {
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="y" />
-                    <YAxis yAxisId="left" />
-                    <YAxis yAxisId="right" orientation="right" />
+                    <YAxis yAxisId="left" domain={[-10, 80]}/>
+                    <YAxis yAxisId="right" orientation="right" domain={[50, 150]} />
                     <Tooltip />
                     <Legend />
                     <Line
@@ -59,7 +59,7 @@ function Chart(props) {
                     <Line yAxisId="right" type="monotone" dataKey="z" stroke="#82ca9d" />
                 </LineChart>
 
-            </ResponsiveContainer>
+            </ResponsiveContainer>                
         </React.Fragment>
     );
 }

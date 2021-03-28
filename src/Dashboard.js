@@ -124,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     fixedHeight: {
-        height: 240,
+        height: 600,
     },
 }));
 
@@ -174,11 +174,6 @@ function Dashboard(props) {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         ABB Auto Tier1
                     </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -207,17 +202,6 @@ function Dashboard(props) {
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
                                 {GetMainContent(props)}
-                            </Paper>
-                        </Grid>
-                        {/* Chart */}
-                        <Grid item xs={12}>
-                            <Paper className={fixedHeightPaper}>
-                                <Chart />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <RechartsTest />
                             </Paper>
                         </Grid>
                     </Grid>

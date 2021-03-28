@@ -1,8 +1,13 @@
 {
   "name": "react-logging",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.2",
+  "private": false,
   "homepage": ".",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zwj12/react-logging.git"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -22,6 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "xcopy /Y /S build \"C:\\Users\\CNMIZHU7\\Documents\\RobotStudio\\Virtual Controllers\\6700-525386-2020-12-11\\HOME\\docs\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

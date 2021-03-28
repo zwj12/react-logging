@@ -19,7 +19,7 @@ class MainMenu extends React.Component {
     }
 
     parseFromRWS(numIndex) {
-        let url = "/rw/rapid/symbol/data/RAPID/T_ROB1/PartAModule/rProcessTargetList{" + numIndex + "}?json=1"
+        let url = "/rw/rapid/symbol/data/RAPID/T_ROB1/ScanAndSpotWeldModule/rProcessTargetList{" + numIndex + "}?json=1"
         let request = new XMLHttpRequest();
         request.onload = () => {
             let obj = JSON.parse(request.responseText);
@@ -34,7 +34,7 @@ class MainMenu extends React.Component {
     }
 
     parseSpotWeldQuantityFromRWS() {
-        let url = "/rw/rapid/symbol/data/RAPID/T_ROB1/PartAModule/numTotalQuantity?json=1"
+        let url = "/rw/rapid/symbol/data/RAPID/T_ROB1/ScanAndSpotWeldModule/numTotalQuantity?json=1"
         let request = new XMLHttpRequest();
         request.onload = () => {
             let obj = JSON.parse(request.responseText);
